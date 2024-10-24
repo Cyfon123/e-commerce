@@ -3,6 +3,7 @@ import MainCarousel from '../../components/HomeCarousel/MainCarousel'
 import HomeSectionCarousel from '../../components/HomeSectionCarousel/HomeSectionCarousel'
 import { mens_kurta } from './mens_kurta'
 import { sareePage1 } from './sareePage1'
+import Footer from '../../components/Footer/Footer'
 
 const HomePage = () => {
   return (
@@ -22,8 +23,11 @@ const HomePage = () => {
         )}
         <HomeSectionCarousel data={sareePage1} sectionName={"Saree"} />
       
-        </div>
+      </div>
         
+      <div>
+        <Footer/>
+      </div>
     
       </div>
   )
