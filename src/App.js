@@ -1,19 +1,17 @@
 import './App.css';
-import Footer from './customer/components/Footer/Footer';
-import Navigation from './customer/components/Navigation/Navigation';
-import Product from './customer/components/Product/Product';
+import { Route, Routes } from 'react-router-dom';
+import CustomerRoutes from './customer/Routes/CustomerRoutes';
 
 function App() {
   return (
-    <div className="App">
-     <Navigation/>
+    <div className="">
 
-     <div>
-      {/* <HomePage/> */}
-      <Product/>
-     </div>
+      <Routes>
 
-     <Footer/>
+        <Route path='/*' element={<CustomerRoutes/>}></Route>
+
+      </Routes>
+
     </div>
   );
 }

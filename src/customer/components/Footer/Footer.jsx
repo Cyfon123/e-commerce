@@ -4,7 +4,7 @@ import React from 'react';
 
 const Footer = () => {
   return (
-    <footer>a
+    <footer>
       <Grid 
         container 
         className='bg-black text-white text-center mt-10'

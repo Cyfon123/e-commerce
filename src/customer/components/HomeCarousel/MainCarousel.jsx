@@ -18,7 +18,7 @@ const MainCarousel = () => {
     return (
         <AliceCarousel
             items={items}
-            autoPlayw
+            autoPlay
             autoPlayStrategy="none"
             autoPlayInterval={1000}
             animationDuration={1000}
