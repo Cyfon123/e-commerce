@@ -9,7 +9,7 @@ const ProductCard = ({product}) => {
       
        <div className='h-[20rem]'>
         <img className='h-full w-full object-cover object-left-top'
-        src={product.image} alt={product.title}/>
+        src={product.imageUrl} alt={product.title}/>
        </div>
 
        <div className='textPart bg-white p-3'>
@@ -20,7 +20,7 @@ const ProductCard = ({product}) => {
         </div>
 
         <div className='flrex items-center space-x-2'>
-            <p className='font-semibold inline'>Rs.{product.discountedPrice}</p>
+            <p className='font-semibold inline'>Rs.{product.discountPrice}</p>
             <p className='line-through opacity-50 inline'>Rs.{product.price}</p>
             <p className='text-green-600 font-semibold inline'>{product.discountPersent}% off</p>
         </div>

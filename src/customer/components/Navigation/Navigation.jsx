@@ -103,7 +103,7 @@ const navigation = {
           id: "clothing",
           name: "Clothing",
           items: [
-            { name: "Tops", href: "#" },
+            { name: "mens_kurta", href: "#"},
             { name: "Pants", href: "#" },
             { name: "Sweaters", href: "#" },
             { name: "T-Shirts", href: "#" },
@@ -174,7 +174,8 @@ export default function Navigation() {
   };
 
   const handleCategoryClick = (category, section, item, close) => {
-    navigate(`/${category.id}/${section.id}/${item.id}`);
+    // navigate(`/${category.id}/${section.id}/${item.id}`);
+    navigate(`/${category.id}/${section.id}/${item.name}`);
     close();
   };
 
@@ -544,7 +545,6 @@ export default function Navigation() {
                         }}
                       >
                         {auth.user.firstName[0].toUpperCase()}
-                        {console.log("You are in Avtar :- " + auth.user.firstName)}
                       </Avatar>
 
                       <Menu

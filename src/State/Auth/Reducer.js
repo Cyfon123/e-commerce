@@ -1,4 +1,4 @@
-import { GET_USER_FAILURE, GET_USER_REQUSEST, GET_USER_SUCCESS, LOGIN_FAILURE, LOGIN_REQUSEST, LOGIN_SUCCESS, LOGOUT, REGISTER_FAILURE, REGISTER_REQUSEST, REGISTER_SUCCESS } from "./ActionType"
+import { GET_USER_FAILURE, GET_USER_REQUEST, GET_USER_SUCCESS, LOGIN_FAILURE, LOGIN_REQUEST, LOGIN_SUCCESS, LOGOUT, REGISTER_FAILURE, REGISTER_REQUEST, REGISTER_SUCCESS } from "./ActionType"
 
 
 const initialState = {
@@ -11,9 +11,9 @@ const initialState = {
 export const authReducer = (state = initialState, action)=>{
     switch(action.type)
     {
-        case REGISTER_REQUSEST:
-        case LOGIN_REQUSEST:
-        case GET_USER_REQUSEST:
+        case REGISTER_REQUEST:
+        case LOGIN_REQUEST:
+        case GET_USER_REQUEST:
             return {...state, isLoading:true, error:null}
         case REGISTER_SUCCESS:
         case LOGIN_SUCCESS:
