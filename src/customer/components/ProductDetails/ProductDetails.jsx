@@ -1,7 +1,7 @@
 
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { StarIcon } from '@heroicons/react/20/solid'
 import { Radio, RadioGroup } from '@headlessui/react'
 import Rating from '@mui/material/Rating';
@@ -9,7 +9,10 @@ import { Box, Button, Grid, LinearProgress } from '@mui/material';
 import ProductReviewCard from './ProductReviewCard';
 import { mens_kurta } from '../../pages/HomePage/mens_kurta';
 import HomeSectionCard from '../HomeSectionCard/HomeSectionCard';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { findProductsById } from '../../../State/Product/Action';
+import { addItemToCart } from '../../../State/Cart/Action';
 
 const product = {
   name: 'Basic Tee 6-Pack',
@@ -70,11 +73,25 @@ function classNames(...classes) {
 }
 
 export default function ProductDetails() {
-  const [selectedColor, setSelectedColor] = useState(product.colors[0])
-  const [selectedSize, setSelectedSize] = useState(product.sizes[2])
+  const [selectedColor, setSelectedColor] = useState()
+  const [selectedSize, setSelectedSize] = useState("")
   const navigate = useNavigate();
-  const handleAddToCart = ()=>{navigate('/cart')}
+  const params = useParams();
+  const dispatch = useDispatch();
+  const {productStore} = useSelector(store => store)
 
+
+  const handleAddToCart = ()=>{
+    const data = {productId: params.productId, size: selectedSize.name}
+    console.log("handleAddToCart",data);
+    dispatch(addItemToCart(data))
+    navigate('/cart')}
+  
+  useEffect(() => { 
+    const data = {productId: params.productId}
+    dispatch(findProductsById(data))}, [params.productId])
+    
+    
   return (
     <div className="bg-white px-5">
       <div className="pt-6">
@@ -113,8 +130,8 @@ export default function ProductDetails() {
         <div className="flex flex-col items-center">
           <div className=" overflow-hidden rounded-lg max-w-[30rem] max-h-[35rem]">
             <img
-              alt={product.images[0].alt}
-              src={product.images[0].src}
+              src={productStore.products.imageUrl}
+              alt={productStore.products.title}
               className="h-full w-full object-cover object-center"
             />
           </div>
@@ -133,7 +150,8 @@ export default function ProductDetails() {
         {/* Product info */}
         <div className="lg:col-span-1 maxt-auto max-w-2xl px-4 pb-16 sm:px-6 lg:max-w-7xl lg:px-8 lg:pb-24">
           <div className="lg:col-span-2">
-            <h1 className="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">{product.name}</h1>
+          <h1 className="text-2xl font-bold mb-2 tracking-tight text-gray-900 sm:text-3xl">{productStore.products.brand}</h1>
+            <h1 className="text-2xl  tracking-tight text-gray-600 sm:text-3xl">{productStore.products.title}</h1>
           </div>
 
           {/* Options */}
@@ -142,9 +160,9 @@ export default function ProductDetails() {
             <h2 className="sr-only">Product information</h2>
 
             <div className='flex space-x-5 items-center text-lg lg:text-xl text-gray-900 mt-6'>
-              <p className='font-semibold'>Rs.2500</p>
-              <p className='opacity-50 line-through'>Rs.5000</p>
-              <p className='text-green-600  font-semibold'>50% off</p>
+              <p className='font-semibold'>{`Rs.${productStore.products.discountPrice}`}</p>
+              <p className='opacity-50 line-through'>{`Rs.${productStore.products.price}`}</p>
+              <p className='text-green-600  font-semibold'>{`${productStore.products.discountPercent}% off`}</p>
             </div>
 
 
@@ -255,7 +273,7 @@ export default function ProductDetails() {
               <h3 className="sr-only">Description</h3>
 
               <div className="space-y-6">
-                <p className="text-base text-gray-900">{product.description}</p>
+                <p className="text-base text-gray-900">{productStore.products.description}</p>
               </div>
             </div>
 

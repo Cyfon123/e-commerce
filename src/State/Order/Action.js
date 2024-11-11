@@ -2,15 +2,16 @@ import { api } from "../../config/apiConfig";
 import { CREATE_ORDER_FAILURE, CREATE_ORDER_REQUEST, CREATE_ORDER_SUCCESS, GET_ORDER_BY_ID_FAILURE, GET_ORDER_BY_ID_REQUEST, GET_ORDER_BY_ID_SUCCESS } from "./ActionType";
 
 export const  createOrder = (reqData) => async (dispatch) => {
-    console.log("reqData :- ",reqData);
+    console.log("create Order before Api :- ",reqData);
     try{
         dispatch({type : CREATE_ORDER_REQUEST});
 
-        const {data} = await api.post(`/api/orders/`, reqData.address);
+        const {data} = await api.post(`/api/orders`, reqData.address);
         if(data.id)
             reqData.navigate({ search: `step=3&order_id=${data.id}`});
-        console.log("Order created:- ", data)
+        console.log("Order created after api:- ", data)
         dispatch({type : CREATE_ORDER_SUCCESS, payload: data});
+        return data;
     }
     catch(error)
     {
@@ -23,6 +24,7 @@ export const getOrderById = (orderId) => async (dispatch) => {
     try{
         dispatch({type : GET_ORDER_BY_ID_REQUEST});
         const {data} = await api.get(`/api/orders/${orderId}`);
+        console.log("get Order By Id",data)
         dispatch({type : GET_ORDER_BY_ID_SUCCESS, payload : data});
     }
     catch(error)

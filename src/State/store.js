@@ -7,9 +7,9 @@ import { orderReducer } from "./Order/Reducer";
 
 const rootReducers = combineReducers({
     auth : authReducer,
-    product : customerProductReducer,
+    productStore : customerProductReducer,
     cart : cartReducer,
-    order : orderReducer
+    orderStore : orderReducer
 })
 
 export const store = legacy_createStore(rootReducers, applyMiddleware(thunk))
