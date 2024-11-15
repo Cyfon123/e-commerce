@@ -13,7 +13,7 @@ export const register = (userData)=> async (dispatch)=>{
     dispatch(registerRequest())
 
     try{
-        const response = await axios.post(`${API_BASE_URL}/auth/signup`,userData)
+        const response = await axios.post(`${API_BASE_URL}auth/signup`,userData)
         const user = response.data;
 
         if(user.jwt)
@@ -38,7 +38,7 @@ export const login = (userData)=> async (dispatch)=>{
     dispatch(loginRequest())
 
     try{
-        const response = await axios.post(`${API_BASE_URL}/auth/signin`,userData)
+        const response = await axios.post(`${API_BASE_URL}auth/signin`,userData)
         const user = response.data;
 
         if(user.jwt)
@@ -63,7 +63,7 @@ export const getUser = (jwt)=> async (dispatch)=>{
     dispatch(getUserRequest())
 
     try{
-        const response = await axios.get(`${API_BASE_URL}/api/users/profile`,
+        const response = await axios.get(`${API_BASE_URL}api/users/profile`,
             {
                 headers:{
                     "Authorization":`Bearer ${jwt}`
