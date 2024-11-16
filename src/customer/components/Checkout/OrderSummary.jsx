@@ -41,11 +41,11 @@ const OrderSummary = () => {
                         <div className='space-y-3 px-5 font-semibold'>
                             <div className='flex justify-between pt-3 text-black'>
                                 <span>Price</span>
-                                <span>Rs5000</span>
+                                <span>{`Rs${orderStore.order?.totalPrice}`}</span>
                             </div>
                             <div className='flex justify-between pt-3 '>
                                 <span>Discount</span>
-                                <span className='text-green-600 font-semibold'>-Rs5000</span>
+                                <span className='text-green-600 font-semibold'>{`-Rs${orderStore.order?.discount}`}</span>
                             </div>
                             <div className='flex justify-between pt-3 '>
                                 <span>Delivery Charge</span>
@@ -53,7 +53,7 @@ const OrderSummary = () => {
                             </div>
                             <div className='flex justify-between pt-3 '>
                                 <span>Total Amount</span>
-                                <span className='text-green-600 font-semibold'>Rs7500</span>
+                                <span className='text-green-600 font-semibold'>{`Rs${orderStore.order?.totalDiscountPrice}`}</span>
                             </div>
 
 
