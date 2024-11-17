@@ -5,6 +5,7 @@ import { Button } from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux'
 import { getOrderById } from '../../../State/Order/Action'
 import { useLocation } from 'react-router-dom'
+import { createPayment } from '../../../State/Payment/Action'
 
 const OrderSummary = () => {
 
@@ -19,6 +20,10 @@ const OrderSummary = () => {
             dispatch(getOrderById(orderId));
         }
     }, [dispatch, orderId]);
+
+    const handleCheckout = ()=> {
+        dispatch(createPayment(orderId))
+    }
     return (
         <div>
 
@@ -41,11 +46,11 @@ const OrderSummary = () => {
                         <div className='space-y-3 px-5 font-semibold'>
                             <div className='flex justify-between pt-3 text-black'>
                                 <span>Price</span>
-                                <span>Rs5000</span>
+                                <span>{`Rs${orderStore.order?.totalPrice}`}</span>
                             </div>
                             <div className='flex justify-between pt-3 '>
                                 <span>Discount</span>
-                                <span className='text-green-600 font-semibold'>-Rs5000</span>
+                                <span className='text-green-600 font-semibold'>{`-Rs${orderStore.order?.discount}`}</span>
                             </div>
                             <div className='flex justify-between pt-3 '>
                                 <span>Delivery Charge</span>
@@ -53,12 +58,12 @@ const OrderSummary = () => {
                             </div>
                             <div className='flex justify-between pt-3 '>
                                 <span>Total Amount</span>
-                                <span className='text-green-600 font-semibold'>Rs7500</span>
+                                <span className='text-green-600 font-semibold'>{`Rs${orderStore.order?.totalDiscountedPrice}`}</span>
                             </div>
 
 
 
-                            <Button variant='contained' className='w-full mx-20 ' sx={{ px: "2.5rem", py: ".7rem", bgcolor: "#9155fd" }}>Checkout</Button>
+                            <Button variant='contained' className='w-full mx-20 ' sx={{ px: "2.5rem", py: ".7rem", bgcolor: "#9155fd" }} onClick={handleCheckout}>Checkout</Button>
                         </div>
                     </div>
                 </div>
