@@ -53,7 +53,7 @@ const OrderSummary = () => {
                             </div>
                             <div className='flex justify-between pt-3 '>
                                 <span>Total Amount</span>
-                                <span className='text-green-600 font-semibold'>{`Rs${orderStore.order?.totalDiscountPrice}`}</span>
+                                <span className='text-green-600 font-semibold'>{`Rs${orderStore.order?.totalDiscountedPrice}`}</span>
                             </div>
 
 
