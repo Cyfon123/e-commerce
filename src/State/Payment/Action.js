@@ -25,6 +25,7 @@ export const updatePayment = (reData) =>async (dispatch) => {
 
     try{
         const {data} = await api.get(`/api/payments?payment_id=${reData.paymentId}&order_id=${reData.orderId}`);
+        {console.log("updatePayment data",data)}
 
         if(data.payment_link_url)
         {

@@ -8,7 +8,7 @@ const OrderTracker = ({activeStep}) => {
     <div className='w-full mt-10'>
 
     <Stepper activeStep={activeStep} alternativeLabel>
-        {steps.map((label)=><Step>
+        {steps.map((label,index)=><Step key={index}>
             <StepLabel sx={{color:"#9155fd", fontSize:"44px"}}>{label}</StepLabel>
         </Step>)}
     </Stepper>

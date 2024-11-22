@@ -103,7 +103,7 @@ const navigation = {
           id: "clothing",
           name: "Clothing",
           items: [
-            { name: "mens_kurta", href: "#"},
+            { name: "mens_kurta", href: "#" },
             { name: "Pants", href: "#" },
             { name: "Sweaters", href: "#" },
             { name: "T-Shirts", href: "#" },
@@ -174,9 +174,13 @@ export default function Navigation() {
   };
 
   const handleCategoryClick = (category, section, item, close) => {
-    // navigate(`/${category.id}/${section.id}/${item.id}`);
     navigate(`/${category.id}/${section.id}/${item.name}`);
     close();
+  };
+
+  const handleMobileCategoryClick = (category, section, item) => {
+    navigate(`/${category.id}/${section.id}/${item.name}`);
+    setOpen(false);  // Close the menu after selecting an item
   };
 
   useEffect(() => {
@@ -186,180 +190,180 @@ export default function Navigation() {
   }, [jwt, auth.jwt]);
 
   useEffect(() => {
-    if(auth.user)
-    {
+    if (auth.user) {
       handleClose()
     }
-    if(location.pathname==="/login" || location.pathname==="/register")
-    {
+    if (location.pathname === "/login" || location.pathname === "/register") {
       navigate(-1)
     }
 
   }, [auth.user]);
 
-  const handleLogout=()=>{
+  const handleLogout = () => {
     dispatch(logout())
     handleCloseUserMenu()
+    navigate("/")
   }
 
   return (
     <div className="bg-white pb-10">
       {/* Mobile menu */}
       <Transition.Root show={open} as={Fragment}>
-  <Dialog as="div" className="relative z-40 lg:hidden" onClose={setOpen}>
-    <Transition.Child
-      as={Fragment}
-      enter="transition-opacity ease-linear duration-300"
-      enterFrom="opacity-0"
-      enterTo="opacity-100"
-      leave="transition-opacity ease-linear duration-300"
-      leaveFrom="opacity-100"
-      leaveTo="opacity-0"
-    >
-      <div className="fixed inset-0 bg-black bg-opacity-25" />
-    </Transition.Child>
 
-    <div className="fixed inset-0 z-40 flex">
-      <Transition.Child
-        as={Fragment}
-        enter="transition ease-in-out duration-300 transform"
-        enterFrom="-translate-x-full"
-        enterTo="translate-x-0"
-        leave="transition ease-in-out duration-300 transform"
-        leaveFrom="translate-x-0"
-        leaveTo="-translate-x-full"
-      >
-        <Dialog.Panel className="relative flex w-full max-w-xs flex-col bg-white shadow-xl overflow-y-auto">
-          {/* Header Section */}
-          <div className="flex items-center justify-between px-4 py-4 border-b border-gray-200">
-            {/* Authenticated User Avatar or Sign-in */}
-            {auth.user?.firstName ? (
-              <div className="flex items-center">
-                <Avatar
-                  onClick={handleUserClick}
-                  aria-controls={openUserMenu ? "basic-menu" : undefined}
-                  aria-haspopup="true"
-                  aria-expanded={openUserMenu ? "true" : undefined}
-                  sx={{
-                    bgcolor: deepPurple[500],
-                    color: "white",
-                    cursor: "pointer",
-                  }}
-                >
-                  {auth.user.firstName[0].toUpperCase()}
-                </Avatar>
+        <Dialog as="div" className="relative z-40 lg:hidden" onClose={setOpen}>
 
-                <Menu
-                  id="basic-menu"
-                  anchorEl={anchorEl}
-                  open={openUserMenu}
-                  onClose={handleCloseUserMenu}
-                  MenuListProps={{
-                    "aria-labelledby": "basic-button",
-                  }}
-                >
-                  <MenuItem onClick={handleCloseUserMenu}>Profile</MenuItem>
-                  <MenuItem onClick={() => navigate("/account/order")}>
-                    My Orders
-                  </MenuItem>
-                  <MenuItem onClick={handleLogout}>Logout</MenuItem>
-                </Menu>
-              </div>
-            ) : (
-              <Button
-                onClick={handleOpen}
-                className="text-sm font-medium text-gray-700 hover:text-gray-800"
-              >
-                Sign in
-              </Button>
-            )}
+          <Transition.Child
+            as={Fragment}
+            enter="transition-opacity ease-linear duration-300"
+            enterFrom="opacity-0"
+            enterTo="opacity-100"
+            leave="transition-opacity ease-linear duration-300"
+            leaveFrom="opacity-100"
+            leaveTo="opacity-0"
+          >
+            <div className="fixed inset-0 bg-black bg-opacity-25" />
+          </Transition.Child>
 
-            {/* Close Button */}
-            <button
-              type="button"
-              className="-m-2 p-2 rounded-md text-gray-400 hover:text-gray-500"
-              onClick={() => setOpen(false)}
+          <div className="fixed inset-0 z-40 flex">
+            <Transition.Child
+              as={Fragment}
+              enter="transition ease-in-out duration-300 transform"
+              enterFrom="-translate-x-full"
+              enterTo="translate-x-0"
+              leave="transition ease-in-out duration-300 transform"
+              leaveFrom="translate-x-0"
+              leaveTo="-translate-x-full"
             >
-              <span className="sr-only">Close menu</span>
-              <XMarkIcon className="h-6 w-6" aria-hidden="true" />
-            </button>
+              <Dialog.Panel className="relative flex w-full max-w-xs flex-col bg-white shadow-xl overflow-y-auto">
+
+                {/* Header Section */}
+                <div className="flex items-center justify-between px-4 py-4 border-b border-gray-200">
+                  {/* Authenticated User Avatar or Sign-in */}
+                  {auth.user?.firstName ? (
+                    <div className="flex items-center">
+                      <Avatar
+                        onClick={handleUserClick}
+                        aria-controls={openUserMenu ? "basic-menu" : undefined}
+                        aria-haspopup="true"
+                        aria-expanded={openUserMenu ? "true" : undefined}
+                        sx={{
+                          bgcolor: deepPurple[500],
+                          color: "white",
+                          cursor: "pointer",
+                        }}
+                      >
+                        {auth.user.firstName[0].toUpperCase()}
+                      </Avatar>
+
+                      <Menu
+                        id="basic-menu"
+                        anchorEl={anchorEl}
+                        open={openUserMenu}
+                        onClose={handleCloseUserMenu}
+                        MenuListProps={{
+                          "aria-labelledby": "basic-button",
+                        }}
+                      >
+                        <MenuItem onClick={handleCloseUserMenu}>Profile</MenuItem>
+                        <MenuItem onClick={() => navigate("/account/order")}>
+                          My Orders
+                        </MenuItem>
+                        <MenuItem onClick={handleLogout}>Logout</MenuItem>
+                      </Menu>
+                    </div>
+                  ) : (
+                    <Button
+                      onClick={handleOpen}
+                      className="text-sm font-medium text-gray-700 hover:text-gray-800"
+                    >
+                      Sign in
+                    </Button>
+                  )}
+
+                  {/* Close Button */}
+                  <button
+                    type="button"
+                    className="-m-2 p-2 rounded-md text-gray-400 hover:text-gray-500"
+                    onClick={() => setOpen(false)}
+                  >
+                    <span className="sr-only">Close menu</span>
+                    <XMarkIcon className="h-6 w-6" aria-hidden="true" />
+                  </button>
+                </div>
+
+                {/* Navigation Tabs */}
+                <Tab.Group as="div" className="mt-2">
+                  <Tab.List className="flex space-x-4 px-4 border-b border-gray-200">
+                    {navigation.categories.map((category) => (
+                      <Tab
+                        key={category.name}
+                        className={({ selected }) =>
+                          classNames(
+                            selected
+                              ? "border-indigo-600 text-indigo-600"
+                              : "border-transparent text-gray-900",
+                            "flex-1 text-base font-medium px-1 py-3 border-b-2"
+                          )
+                        }
+                      >
+                        {category.name}
+                      </Tab>
+                    ))}
+                  </Tab.List>
+                  <Tab.Panels>
+                    {navigation.categories.map((category) => (
+                      <Tab.Panel key={category.id} className="space-y-6 px-4 py-6">
+
+                        <div className="grid grid-cols-2 gap-4">
+                          {category.featured.map((item) => (
+                            <div key={item.name} className="group relative text-sm">
+                              <div className="aspect-w-1 aspect-h-1 overflow-hidden rounded-lg bg-gray-100 group-hover:opacity-75">
+                                <img
+                                  src={item.imageSrc}
+                                  alt={item.imageAlt}
+                                  className="object-cover object-center"
+                                />
+                              </div>
+                              <a
+                                href={item.href}
+                                className="mt-4 block font-medium text-gray-900"
+                              >
+                                {item.name}
+                              </a>
+                              <p className="text-gray-500">Shop now</p>
+                            </div>
+                          ))}
+                        </div>
+
+                        {category.sections.map((section) => (
+                          <div key={section.id} className="mt-6">
+                            <p className="font-medium text-gray-900">{section.name}</p>
+                            <ul className="mt-4 space-y-4">
+                              {section.items.map((item) => (
+                                <li key={item.name}>
+                                  <p
+                                    className="text-gray-500 cursor-pointer hover:text-gray-700"
+                                    onClick={() =>handleMobileCategoryClick(category,section,item )}
+                                  >
+                                    {item.name}
+                                  </p>
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        ))}
+                      </Tab.Panel>
+                    ))}
+                  </Tab.Panels>
+                </Tab.Group>
+
+              </Dialog.Panel>
+
+            </Transition.Child>
           </div>
 
-          {/* Navigation Tabs */}
-          <Tab.Group as="div" className="mt-2">
-            <Tab.List className="flex space-x-4 px-4 border-b border-gray-200">
-              {navigation.categories.map((category) => (
-                <Tab
-                  key={category.name}
-                  className={({ selected }) =>
-                    classNames(
-                      selected
-                        ? "border-indigo-600 text-indigo-600"
-                        : "border-transparent text-gray-900",
-                      "flex-1 text-base font-medium px-1 py-3 border-b-2"
-                    )
-                  }
-                >
-                  {category.name}
-                </Tab>
-              ))}
-            </Tab.List>
-            <Tab.Panels>
-              {navigation.categories.map((category) => (
-                <Tab.Panel
-                  key={category.name}
-                  className="space-y-6 px-4 py-6"
-                >
-                  <div className="grid grid-cols-2 gap-4">
-                    {category.featured.map((item) => (
-                      <div key={item.name} className="group relative text-sm">
-                        <div className="aspect-w-1 aspect-h-1 overflow-hidden rounded-lg bg-gray-100 group-hover:opacity-75">
-                          <img
-                            src={item.imageSrc}
-                            alt={item.imageAlt}
-                            className="object-cover object-center"
-                          />
-                        </div>
-                        <a
-                          href={item.href}
-                          className="mt-4 block font-medium text-gray-900"
-                        >
-                          {item.name}
-                        </a>
-                        <p className="text-gray-500">Shop now</p>
-                      </div>
-                    ))}
-                  </div>
+        </Dialog>
 
-                  {category.sections.map((section) => (
-                    <div key={section.name} className="mt-6">
-                      <p className="font-medium text-gray-900">
-                        {section.name}
-                      </p>
-                      <ul className="mt-4 space-y-4">
-                        {section.items.map((item) => (
-                          <li key={item.name}>
-                            <p
-                              className="text-gray-500 cursor-pointer hover:text-gray-700"
-                              onClick={() =>
-                                handleCategoryClick(category, section, item, close)
-                              }
-                            >
-                              {item.name}
-                            </p>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  ))}
-                </Tab.Panel>
-              ))}
-            </Tab.Panels>
-          </Tab.Group>
-        </Dialog.Panel>
-      </Transition.Child>
-    </div>
-  </Dialog>
       </Transition.Root>
 
 
@@ -402,7 +406,7 @@ export default function Navigation() {
                               className={classNames(
                                 open
                                   ? "border-indigo-600 text-indigo-600"
-                                  : "border-transparent text-gray-700 hover:text-gray-800",
+                                  : "border-transparent text-gray-700 hover:text-gray-900",
                                 "relative z-10 -mb-px flex items-center border-b-2 pt-px text-sm font-medium transition-colors duration-200 ease-out"
                               )}
                             >

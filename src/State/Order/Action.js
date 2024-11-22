@@ -24,7 +24,6 @@ export const getOrderById = (orderId) => async (dispatch) => {
     try{
         dispatch({type : GET_ORDER_BY_ID_REQUEST});
         const {data} = await api.get(`/api/orders/${orderId}`);
-        console.log("get Order By Id",data)
         dispatch({type : GET_ORDER_BY_ID_SUCCESS, payload : data});
     }
     catch(error)
