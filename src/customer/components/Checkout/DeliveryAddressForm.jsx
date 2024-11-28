@@ -1,14 +1,29 @@
-import { Box, Button, Grid, TextField } from '@mui/material'
-import React from 'react'
+import { Box, Button, Grid, TextField, Typography } from '@mui/material'
+import React, { useEffect, useState } from 'react'
 import AddressCard from '../AddressCard/AddressCard';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { createOrder } from '../../../State/Order/Action';
 import {  useNavigate } from 'react-router-dom';
+import { getAddresses } from '../../../State/Adrress/Action';
 
 const DeliveryAddressForm = () => {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
+
+    const [selectedAddress, setSelectedAddress] = useState(null);
+
+    // Fetch addresses from the Redux store
+    const { addresses, loading } = useSelector((state) => state.addressProperty);
+
+    useEffect(() => {
+        // Dispatch action to fetch addresses
+        dispatch(getAddresses());
+    }, [dispatch]);
+
+    const handleSelectAddress = (address) => {
+        setSelectedAddress(address);
+    };
 
     const handleSubmit= async (e)=>{
         e.preventDefault();
@@ -34,7 +49,7 @@ const DeliveryAddressForm = () => {
     return (
         <div>
             <Grid container spacing={4}>
-                <Grid xs={12} lg={5} className='border rounded-e-md shadow-md h-[30.5rem] overflow-y-scroll'>
+                {/* <Grid xs={12} lg={5} className='border rounded-e-md shadow-md h-[30.5rem] overflow-y-scroll'>
                     <div className='p-5 py-7 border-b cursor-pointer'>
                         <AddressCard />
                         <Button
@@ -42,7 +57,34 @@ const DeliveryAddressForm = () => {
                             size='large'
                             variant='contained'>Deliver here</Button>
                     </div>
+                </Grid> */}
+
+<Grid item xs={12} lg={5} className='border rounded-e-md shadow-md h-[30.5rem] overflow-y-scroll'>
+                    <div className='p-5 py-7 border-b'>
+                        <Typography variant="h6" gutterBottom>
+                            Select an Address
+                        </Typography>
+                        {console.log("list of addresses",addresses)}
+                        {loading ? (
+                            <Typography>Loading addresses...</Typography>
+                        ) : (
+                            addresses.map((address) => (
+                                <div key={address.id} className='my-4'>
+                                    <AddressCard address={address} />
+                                    <Button
+                                        sx={{ mt: 2, bgcolor: selectedAddress?.id === address.id ? "RGB(145 85 253)" : "gray" }}
+                                        size='large'
+                                        variant='contained'
+                                        onClick={() => handleSelectAddress(address)}
+                                    >
+                                        {selectedAddress?.id === address.id ? "Selected" : "Deliver here"}
+                                    </Button>
+                                </div>
+                            ))
+                        )}
+                    </div>
                 </Grid>
+
 
                 <Grid item xs={12} lg={7}>
 
