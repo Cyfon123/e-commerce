@@ -23,6 +23,7 @@ export const getAddresses = () => async (dispatch) => {
     try{
         dispatch({type : GET_ADDRESS_REQUEST});
         const {data} = await api.get(`/api/address`);
+        console.log("Addresses data : ", data)
         dispatch({type : GET_ADDRESS_SUCCESS, payload : data});
     }
     catch(error)

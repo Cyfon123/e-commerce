@@ -1,5 +1,5 @@
 import { api } from "../../config/apiConfig";
-import { CREATE_ORDER_FAILURE, CREATE_ORDER_REQUEST, CREATE_ORDER_SUCCESS, GET_ORDER_BY_ID_FAILURE, GET_ORDER_BY_ID_REQUEST, GET_ORDER_BY_ID_SUCCESS } from "./ActionType";
+import { CREATE_ORDER_FAILURE, CREATE_ORDER_REQUEST, CREATE_ORDER_SUCCESS, CREATE_ORDER_WITH_ADDRESSID_FAILURE, CREATE_ORDER_WITH_ADDRESSID_REQUEST, CREATE_ORDER_WITH_ADDRESSID_SUCCESS, GET_ORDER_BY_ID_FAILURE, GET_ORDER_BY_ID_REQUEST, GET_ORDER_BY_ID_SUCCESS } from "./ActionType";
 
 export const  createOrder = (reqData) => async (dispatch) => {
     console.log("create Order before Api :- ",reqData);
@@ -16,6 +16,26 @@ export const  createOrder = (reqData) => async (dispatch) => {
     catch(error)
     {
         dispatch({type : CREATE_ORDER_FAILURE, payload: error.response && error.response.data.message ? error.response.data.message : error.message});
+
+    }
+}
+
+export const  createOrderWithAddressId = (reqData) => async (dispatch) => {
+    console.log("create Order before Api :- ",reqData);
+    try{
+        dispatch({type : CREATE_ORDER_WITH_ADDRESSID_REQUEST});
+
+        const {data} = await api.post(`/api/orders/address`, reqData.addressId);
+        console.log("data id :- ",data.id)
+        if(data.id)
+            reqData.navigate({ search: `step=3&order_id=${data.id}`});
+        console.log("Order created after api:- ", data)
+        dispatch({type : CREATE_ORDER_WITH_ADDRESSID_SUCCESS, payload: data});
+        return data;
+    }
+    catch(error)
+    {
+        dispatch({type : CREATE_ORDER_WITH_ADDRESSID_FAILURE, payload: error.response && error.response.data.message ? error.response.data.message : error.message});
 
     }
 }

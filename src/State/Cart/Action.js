@@ -43,7 +43,7 @@ export const removeCartItem = (cartItemId) => async (dispatch) => {
     console.log("updateCartItem response before:", reqData);
   
     try {
-      const { data } = await api.put(`/api/cart_item/${reqData.cartItemId}`, reqData);
+      const { data } = await api.put(`/api/cart_item/${reqData.cartItemId}`, { quantity: reqData.quantity });
       console.log("updateCartItem response:", data);
       dispatch({ type: UPDATE_CART_ITEM_SUCCESS, payload: data });
     } catch (error) {

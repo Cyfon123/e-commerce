@@ -63,7 +63,7 @@ const OrderSummary = () => {
 
 
 
-                            <Button variant='contained' className='w-full mx-20 ' sx={{ px: "2.5rem", py: ".7rem", bgcolor: "#9155fd" }} onClick={handleCheckout}>Checkout</Button>
+                            <Button variant='contained' className='w-full mx-20 ' sx={{ px: "2.5rem", py: ".7rem", bgcolor: "#9155fd" }} onClick={handleCheckout}>Pay</Button>
                         </div>
                     </div>
                 </div>

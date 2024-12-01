@@ -14,16 +14,15 @@ export const addressReducer = (state=initialState, action)=>{
     switch(action.type)
     {
         case CREATE_ADDRESS_REQUEST:
+        case GET_ADDRESS_REQUEST:
             return {...state, loading: true, error: null}
         case CREATE_ADDRESS_SUCCESS:
-            return {...state, loading: false, error: null, order: action.payload}
+            return {...state, loading: false, error: null, addresses: action.payload}
         case CREATE_ADDRESS_FAILURE:
             return {...state, loading: false, error: action.payload}
 
-        case GET_ADDRESS_REQUEST:
-            return {...state, loading: true, error: null}
         case GET_ADDRESS_SUCCESS:
-            return {...state, loading: false, error: null, order: action.payload}
+            return {...state, loading: false, error: null, addresses: action.payload}
         case GET_ADDRESS_FAILURE:
             return {...state, loading: false, error: action.payload}
 
